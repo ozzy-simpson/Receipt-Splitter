@@ -2,11 +2,11 @@ import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ fetch,  url }) => {
-	// Get the receipt from the query parameters and parse it
-	const receiptParam = url.searchParams.get('receipt');
+export const load: PageServerLoad = async ({ fetch, url }) => {
+    // Get the receipt from the query parameters and parse it
+    const receiptParam = url.searchParams.get('receipt');
     try {
-	    const receipt = receiptParam ? atob(decodeURIComponent(receiptParam)) : null;
+        const receipt = receiptParam ? atob(decodeURIComponent(receiptParam)) : null;
 
         // If the receipt is provided, convert it from JSON string to Receipt object
         if (receipt) {
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ fetch,  url }) => {
 
             return {
                 receipt: JSON.parse(receipt),
-                shortUrl: shortUrl,
+                shortUrl: shortUrl
             };
         }
         // If no receipt is provided, redirect to home
