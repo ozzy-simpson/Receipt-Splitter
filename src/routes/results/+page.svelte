@@ -3,16 +3,24 @@
 	import { goto } from '$app/navigation';
 	import type { Receipt, ReceiptItem } from '$lib/utils/Receipts';
 	import { page } from '$app/state';
+    import copy from 'copy-to-clipboard';
 
 	let { data }: PageProps = $props();
 	let receipt: Receipt = $derived.by(() => {
 		return data.receipt;
 	});
 
-	// Get current URL from $page
-	let currentUrl = $derived.by(() => {
-		return page.url.toString();
-	});
+    $effect(() => {
+        // If receipt is not loaded, redirect to home
+        if (!receipt) {
+            goto('/');
+        }
+    });
+
+    // Get short URL to this receipt
+    let shortUrl: string = $derived.by(() => {
+        return data.shortUrl || page.url.toString();
+    });
 
 	let peopleSet = $derived.by(() => {
 		// Create a Set of unique names from receipt items
@@ -133,7 +141,7 @@
 			<!-- QR code to this page -->
 			<div class="mb-4 flex justify-center">
 				<img
-					src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}`}
+					src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(shortUrl)}`}
 					alt="QR code for this receipt"
 					class="rounded shadow"
 					width="160"
@@ -144,16 +152,8 @@
 				class="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
 				onclick={() => {
 					// Copy the receipt URL to clipboard
-					const url = new URL(currentUrl);
-					url.searchParams.set('receipt', btoa(JSON.stringify(receipt)));
-					navigator.clipboard
-						.writeText(url.toString())
-						.then(() => {
-							alert('Receipt link copied to clipboard!');
-						})
-						.catch((err) => {
-							console.error('Failed to copy: ', err);
-						});
+                    copy(shortUrl);
+                    alert('Receipt split link copied to clipboard!');
 				}}
 				type="button"
 			>
