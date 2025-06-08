@@ -1,22 +1,17 @@
-# sv
+# Toast Receipt Splitter
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A simple SvelteKit app to split a Toast receipt just from the link, item-by-item, allowing you to easily share the cost of a meal with friends.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+- Automatically imports receipt items from a Toast receipt link, including the number of guests (if available), tax, tip, and fees/surcharges.
+- Quickly provide names for each guest and assign items to one or more guests.
+- Automatically calculates the total for each guest, including their portion of tax and tip.
+- Generates a shareable QR code and link for the split receipt.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've cloned the repo and installed dependencies with `npm install`, start a development server:
 
 ```bash
 npm run dev
@@ -27,7 +22,7 @@ npm run dev -- --open
 
 ## Building
 
-To create a production version of your app:
+To create a production version of the app:
 
 ```bash
 npm run build
@@ -35,4 +30,10 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+To deploy to cPanel, run:
+
+```bash
+npm run build:cpanel
+```
+
+This will create a `to_upload.tar` that you can upload to your cPanel account and then extract it to your Node.js application directory. Set the startup file to `index.cjs` in your cPanel Node.js application settings.
