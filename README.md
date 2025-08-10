@@ -1,10 +1,10 @@
-# Toast Receipt Splitter
+# Receipt Splitter
 
-A simple SvelteKit app to split a Toast receipt just from the link, item-by-item, allowing you to easily share the cost of a meal with friends.
+A simple SvelteKit app to split a receipt just from the link, item-by-item, allowing you to easily share the cost of a meal with friends.
 
 ## Features
 
-- Automatically imports receipt items from a Toast receipt link, including the number of guests (if available), tax, tip, and fees/surcharges.
+- Automatically imports receipt items from a receipt link (currently supports Toast), including the number of guests (if available), tax, tip, and fees/surcharges.
 - Quickly provide names for each guest and assign items to one or more guests.
 - Automatically calculates the total for each guest, including their portion of tax and tip.
 - Generates a shareable QR code and link for the split receipt.
